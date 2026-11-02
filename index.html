@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -5,67 +6,86 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ART EPOXY</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#101820;color:white;font-family:Arial,sans-serif}
-header{background:#202c38;text-align:center;padding:25px 12px}
-h1{color:#e5bd70;letter-spacing:3px;margin:5px}
-header p{margin:8px;color:#ddd}
-main{max-width:500px;margin:25px auto;padding:15px}
-.card{background:#202c38;border:1px solid #53606c;border-radius:14px;padding:22px}
-h2{color:#e5bd70;text-align:center}
-input,button{width:100%;padding:14px;margin:9px 0;border-radius:7px;font-size:16px}
-input{border:1px solid #aaa;background:white;color:#111}
-button{background:#d6ad62;color:#111;border:0;font-weight:bold}
-.note{text-align:center;color:#bbb;font-size:13px;margin-top:20px}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #101820;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+header {
+  background: #202c38;
+  text-align: center;
+  padding: 25px 12px;
+}
+h1, h2 { color: #e5bd70; text-align: center; }
+header p { color: #ddd; }
+main { max-width: 500px; margin: 25px auto; padding: 15px; }
+.card {
+  background: #202c38;
+  border: 1px solid #53606c;
+  border-radius: 14px;
+  padding: 22px;
+}
+input, button {
+  width: 100%;
+  padding: 14px;
+  margin: 9px 0;
+  border-radius: 7px;
+  font-size: 16px;
+}
+input { border: 1px solid #aaa; background: white; color: #111; }
+button { background: #d6ad62; color: #111; border: 0; font-weight: bold; }
+.note { text-align: center; color: #bbb; font-size: 13px; margin-top: 20px; }
 </style>
 </head>
 <body>
 <header>
 <h1>ART EPOXY</h1>
-<p>UPVC WINDOWS & DOORS</p>
+<p>UPVC WINDOWS &amp; DOORS</p>
 <p>Saswad Road, Wadaki Nala, Pune</p>
 </header>
 <main>
 <div class="card">
+<p style="text-align:center">Window Quotation &amp; Cutting List App</p>
 <h2>Welcome</h2>
-<p style="text-align:center">Window Quotation & Cutting List App</p>
 <input id="email" type="email" placeholder="Email ID">
 <input id="password" type="password" placeholder="Password">
-<button onclick="login()">LOGIN</button>
+<button id="loginBtn">LOGIN</button>
 <p id="message" style="text-align:center"></p>
 </div>
-<p class="note">ART EPOXY • Quality That Shows</p>
+<p class="note">ART EPOXY Quality That Shows</p>
 </main>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyDoSR3rsj-LfKp0wVNKpPSkm8XrwUyBG3I",
-authDomain: "art-epoxy-229ea.firebaseapp.com",
-projectId: "art-epoxy-229ea",
-storageBucket: "art-epoxy-229ea.firebasestorage.app",
-messagingSenderId: "487674712627",
-appId: "1:487674712627:web:8bc25b729d7a17c8250946"
+  apiKey: "AIzaSyDoSR3rsj-LfKp0wVNKpPSkm8XrwUyBG3I",
+  authDomain: "art-epoxy-229ea.firebaseapp.com",
+  projectId: "art-epoxy-229ea",
+  storageBucket: "art-epoxy-229ea.firebasestorage.app",
+  messagingSenderId: "487674712627",
+  appId: "1:487674712627:web:8bc25b729d7a17c8250946"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-window.login = async function(){
- const message = document.getElementById("message");
- message.textContent = "Please wait...";
- try {
-  await signInWithEmailAndPassword(
-   auth,
-   document.getElementById("email").value.trim(),
-   document.getElementById("password").value
-  );
-  message.textContent = "Login successful!";
- } catch(error) {
-  message.textContent = "Login failed. Email ya password check karein.";
- }
-};
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  const message = document.getElementById("message");
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  message.textContent = "Please wait...";
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    message.textContent = "Login successful!";
+  } catch (error) {
+    message.textContent = "Login error: " + error.code;
+  }
+});
 </script>
 </body>
 </html>
